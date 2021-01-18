@@ -1,4 +1,5 @@
 package co.cyclopsapps.cleanrickandmorty
+import co.cyclopsapps.cleanrickandmorty.character.list.model.CharacterResponse
 import retrofit2.Response
 import timber.log.Timber
 
@@ -16,7 +17,7 @@ class CharacterRepository {
      */
     suspend fun getCharacter(): Response<CharacterResponse>? {
         return try {
-                apiService?.getCharacters("eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJkYiI6InJlc3RhdXJhbnRhcHAiLCJjaWQiOiIxIn0._ri2Dghqcg-O1Yja5GCTENti3XobgcvB7-psyZLpCtA")
+                apiService?.getCharacters()
         } catch (exception: Exception) {
             Timber.tag("getData").e(exception)
             null
@@ -24,7 +25,7 @@ class CharacterRepository {
     }
 
 
-
-    suspend fun getCharacter2() = apiService?.getCharacters("eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJkYiI6InJlc3RhdXJhbnRhcHAiLCJjaWQiOiIxIn0._ri2Dghqcg-O1Yja5GCTENti3XobgcvB7-psyZLpCtA")
+    //OTRA FORMA
+    suspend fun getCharacter2() = apiService?.getCharacters()
 
 }

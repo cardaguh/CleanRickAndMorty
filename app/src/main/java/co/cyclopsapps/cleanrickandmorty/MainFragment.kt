@@ -1,12 +1,21 @@
 package co.cyclopsapps.cleanrickandmorty
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.core.view.isVisible
+import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
+import androidx.recyclerview.widget.DividerItemDecoration
+import androidx.recyclerview.widget.LinearLayoutManager
+import co.cyclopsapps.cleanrickandmorty.character.CharacterState
+import co.cyclopsapps.cleanrickandmorty.character.detail.DetailFragment
+import co.cyclopsapps.cleanrickandmorty.character.list.adapater.CharacterAdapter
+import co.cyclopsapps.cleanrickandmorty.databinding.FragmentMainBinding
+import org.w3c.dom.CharacterData
 
 
 class MainFragment : Fragment(), OnCustomClickListener {
@@ -15,14 +24,14 @@ class MainFragment : Fragment(), OnCustomClickListener {
     private var _binding: FragmentMainBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var restaurantViewModel: MainViewModel
+    private lateinit var mainViewModel: MainViewModel
 
-    private lateinit var adapter: RestaurantAdapter
+    private lateinit var characterAdapter: CharacterAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        restaurantViewModel = ViewModelProvider(this).get(MainViewModel::class.java)
-        restaurantViewModel.getState().observe(this, Observer { onChanged(it) })
+        mainViewModel = ViewModelProvider(this).get(MainViewModel::class.java)
+        mainViewModel.getState().observe(this, Observer { onChanged(it) })
     }
 
     override fun onCreateView(
@@ -37,16 +46,29 @@ class MainFragment : Fragment(), OnCustomClickListener {
         super.onViewCreated(view, savedInstanceState)
         setupRecyclerView()
 
-
-        with(binding) {
-            button.setOnClickListener { view ->
-                restaurantViewModel.getRestaurantData()
-            }
+        binding.button.setOnClickListener {
+            mainViewModel.fetchCharacterData()
         }
-
 
     }
 
+    private fun setupRecyclerView() {
+        //Recibe interfaz y el otro recibe función
+
+        //Primero pasamos interfaz y el segundo paramatro es una función
+        characterAdapter = CharacterAdapter(this, ::onCategoryClickListener)
+
+        with(binding.rvCharacterss) {
+            layoutManager = LinearLayoutManager(binding.root.context)
+            addItemDecoration(
+                DividerItemDecoration(
+                    requireContext(),
+                    DividerItemDecoration.VERTICAL
+                )
+            )
+            adapter = characterAdapter
+        }
+    }
 
     /**
      * Validate answers
@@ -89,7 +111,7 @@ class MainFragment : Fragment(), OnCustomClickListener {
         this@MainFragment.context?.let {
             when (renderState) {
                 is CharacterState.ShowRestaurantData -> {
-                    adapter.setRestaurantData(renderState.response)
+                    characterAdapter.setCharacterData(renderState.response)
                     binding.progress.isVisible = false
 
                 }
@@ -98,25 +120,6 @@ class MainFragment : Fragment(), OnCustomClickListener {
                     binding.progress.isVisible = false
                 }
             }
-        }
-    }
-
-
-    private fun setupRecyclerView() {
-        //Recibe interfaz y el otro recibe función
-
-        //Primeor pasamos interfaz y el segundo paramatro es una función
-        adapter = RestaurantAdapter(this, ::onCategoryClickListener)
-
-        with(binding) {
-            rvRestaurants.layoutManager = LinearLayoutManager(requireContext())
-            rvRestaurants.addItemDecoration(
-                DividerItemDecoration(
-                    requireContext(),
-                    DividerItemDecoration.VERTICAL
-                )
-            )
-            rvRestaurants.adapter = adapter
         }
     }
 
@@ -134,22 +137,28 @@ class MainFragment : Fragment(), OnCustomClickListener {
         Toast.makeText(context, "Mi imagen click1 $img", Toast.LENGTH_SHORT).show()
         // Aqui haces la funcionalidad de abrir el detalle
 
-        openDetail()
+        //openDetail()
     }
 
     //2 Con una función (Listener)
     //No tienes que estar creando interfaces
-    private fun onCategoryClickListener(img: String) {
-        openDetail()
+    private fun onCategoryClickListener(name: String, img: String) {
+        openDetail(name, img)
 
         Toast.makeText(context, "Mi imagen click2 $img", Toast.LENGTH_SHORT).show()
     }
 
 
-    private fun openDetail() {
+    private fun openDetail(name: String, img: String) {
         activity?.supportFragmentManager
             ?.beginTransaction()
-            ?.add(android.R.id.content, CategoryFragment.newInstance())
+            ?.add(
+                android.R.id.content,
+                DetailFragment.newInstance(
+                    name = name,
+                    img = img
+                )
+            )
             ?.addToBackStack(null)
             ?.commit()
     }

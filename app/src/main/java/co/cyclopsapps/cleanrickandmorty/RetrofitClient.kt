@@ -9,6 +9,7 @@ import java.util.concurrent.TimeUnit
 
 object RetrofitClient {
     private var retrofit: Retrofit? = null
+    private const val BASE_URL = "https://rickandmortyapi.com/api/"
 
     private val logger: OkHttpClient
         get() {
@@ -26,11 +27,12 @@ object RetrofitClient {
         get() {
             if (retrofit == null) {
                 retrofit = Retrofit.Builder()
-                    .baseUrl("https://rickandmortyapi.com/api/")
+                    .baseUrl(BASE_URL)
                     .addConverterFactory(GsonConverterFactory.create())
                     .client(logger)
                     .build()
             }
             return retrofit
         }
+
 }

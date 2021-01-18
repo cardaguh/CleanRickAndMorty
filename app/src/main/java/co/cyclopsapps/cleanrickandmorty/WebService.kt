@@ -1,12 +1,14 @@
 package co.cyclopsapps.cleanrickandmorty
 
+import co.cyclopsapps.cleanrickandmorty.character.list.model.CharacterResponse
 import retrofit2.Response
 import retrofit2.http.GET
-import retrofit2.http.Query
 
 interface WebService {
 
-    @GET("results")
-    suspend fun getCharacters(@Query(value = "token") tokenValue: String)
+    //Lo que hace falta en la url
+    @GET("character") // Aquí va el end-point
+
+    suspend fun getCharacters()
             : Response<CharacterResponse>
 }

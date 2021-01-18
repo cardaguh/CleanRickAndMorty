@@ -1,4 +1,4 @@
-package co.cyclopsapps.cleanrickandmorty
+package co.cyclopsapps.cleanrickandmorty.character.list.adapater
 
 import android.view.LayoutInflater
 import android.view.View
@@ -6,16 +6,19 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import co.cyclopsapps.cleanrickandmorty.OnCustomClickListener
+import co.cyclopsapps.cleanrickandmorty.R
+import co.cyclopsapps.cleanrickandmorty.character.list.model.CharacterDataModel
+import co.cyclopsapps.cleanrickandmorty.character.list.model.CharacterResponse
 import com.bumptech.glide.Glide
 
-class RestaurantAdapter(
+class CharacterAdapter(
     private val onCustomClickListener1: OnCustomClickListener,
-    private val onCustomClickListener2: (img: String) -> Unit
+    private val onCustomClickListener2: (name: String, img: String) -> Unit
 
-): RecyclerView.Adapter<RestaurantAdapter.MyHolder>() {
+): RecyclerView.Adapter<CharacterAdapter.MyHolder>() {
 
-    private var  categoryList: MutableList<CharacterData> = mutableListOf()
-    private var restaurant: Character? = null
+    private var allCharacter: MutableList<CharacterDataModel> = mutableListOf()
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): MyHolder {
         val layoutView = LayoutInflater.from(parent.context).inflate(R.layout.character_row, parent, false)
@@ -23,36 +26,34 @@ class RestaurantAdapter(
     }
 
 
-    fun setRestaurantData(response : CharacterResponse) {
-        restaurant = response.company
-
-        response?.category?.let {
-            categoryList.clear()
-            categoryList.addAll(it)
+    fun setCharacterData(response : CharacterResponse) {
+        response.results?.let {
+            allCharacter.clear()
+            allCharacter.addAll(it)
+            notifyDataSetChanged()
         }
-        notifyDataSetChanged()
     }
 
     override fun onBindViewHolder(holder: MyHolder, position: Int) {
-        val category = categoryList[position]
+        val character = allCharacter[position]
 
         //Permite acceder a los componentes sin tener que estar escribiendo
         // category.name o category.img
-        with(category) {
-            Glide.with(holder.itemView.context).load(img).into(holder.imgRestaurant)
+        with(character) {
+            Glide.with(holder.itemView.context).load(image).into(holder.imgRestaurant)
             holder.txtResturantTitle.text = name
         }
 
 
         holder.itemView.setOnClickListener {
             //onCustomClickListener1.showCategoryDetail(category.img)
-            onCustomClickListener2(category.img)
+            onCustomClickListener2(character.name, character.image)
         }
 
     }
 
     override fun getItemCount(): Int {
-        return categoryList.size
+        return allCharacter.size
     }
 
 

@@ -1,4 +1,4 @@
-package co.cyclopsapps.cleanrickandmorty
+package co.cyclopsapps.cleanrickandmorty.character.list.ui
 
 import android.os.Bundle
 import androidx.fragment.app.Fragment
@@ -6,6 +6,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.lifecycle.ViewModelProvider
+import co.cyclopsapps.cleanrickandmorty.MainViewModel
+import co.cyclopsapps.cleanrickandmorty.databinding.FragmentCategoryBinding
 
 
 class CategoryFragment : Fragment() {
@@ -31,7 +33,7 @@ class CategoryFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-       val name = characterViewModel.restaurantResponse
+       val name = characterViewModel.characterFullList
     }
 
     override fun onDestroyView() {
