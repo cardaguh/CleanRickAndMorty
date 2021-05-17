@@ -23,5 +23,4 @@ class App : Application(), HasAndroidInjector {  // copy paste de HasAndroidInje
 
     override fun androidInjector() = androidInjector // copy paste
 
-
 }

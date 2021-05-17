@@ -1,5 +1,6 @@
 package co.cyclopsapps.cleanrickandmorty.views
 
+import android.content.Context
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -12,35 +13,36 @@ import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
-import co.cyclopsapps.cleanrickandmorty.views.viewmodels.MainViewModel
-import co.cyclopsapps.cleanrickandmorty.utilities.ScreenState
 import co.cyclopsapps.cleanrickandmorty.character.CharacterState
 import co.cyclopsapps.cleanrickandmorty.character.detail.DetailFragment
 import co.cyclopsapps.cleanrickandmorty.character.list.adapater.CharacterAdapter
 import co.cyclopsapps.cleanrickandmorty.databinding.FragmentMainBinding
-import co.cyclopsapps.cleanrickandmorty.utilities.ViewModelFactory
+import co.cyclopsapps.cleanrickandmorty.utilities.ScreenState
+import co.cyclopsapps.cleanrickandmorty.views.viewmodels.MainViewModel
+import dagger.android.support.AndroidSupportInjection
 import javax.inject.Inject
 
 
 class MainFragment : Fragment(), OnCustomClickListener {
 
     // BINDING
+    @Inject
+    lateinit var viewModelFactory: ViewModelProvider.Factory
+    private val viewModel: MainViewModel by viewModels { viewModelFactory }
+
     private var _binding: FragmentMainBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var mainViewModel: MainViewModel
-
     private lateinit var characterAdapter: CharacterAdapter
 
-    @Inject
-    lateinit var viewModelFactory: ViewModelProvider.Factory
-
-    private val viewModel: MainViewModel by viewModels { viewModelFactory }
+    override fun onAttach(context: Context) {
+        AndroidSupportInjection.inject(this)
+        super.onAttach(context)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        mainViewModel = ViewModelProvider(this).get(MainViewModel::class.java)
-        mainViewModel.getState().observe(this, Observer { onChanged(it) })
+        viewModel.getState().observe(this, Observer { onChanged(it) })
     }
 
     override fun onCreateView(
@@ -56,7 +58,7 @@ class MainFragment : Fragment(), OnCustomClickListener {
         setupRecyclerView()
 
         binding.button.setOnClickListener {
-            mainViewModel.fetchCharacterData()
+            viewModel.fetchCharacterData()
         }
 
     }

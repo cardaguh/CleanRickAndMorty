@@ -1,31 +1,30 @@
 package co.cyclopsapps.cleanrickandmorty.character.list.ui
 
 import android.os.Bundle
-import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.ViewModelProvider
-import co.cyclopsapps.cleanrickandmorty.views.viewmodels.MainViewModel
 import co.cyclopsapps.cleanrickandmorty.databinding.FragmentCategoryBinding
+import co.cyclopsapps.cleanrickandmorty.views.viewmodels.MainViewModel
+import javax.inject.Inject
 
 
 class CategoryFragment : Fragment() {
     private var _binding: FragmentCategoryBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var characterViewModel: MainViewModel
+    @Inject
+    lateinit var viewModelFactory: ViewModelProvider.Factory
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        characterViewModel = ViewModelProvider(this).get(MainViewModel::class.java)
-
-    }
+    private val characterViewModel: MainViewModel by viewModels { viewModelFactory }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = FragmentCategoryBinding.inflate(inflater, container, false)
         return binding.root
     }
@@ -33,7 +32,7 @@ class CategoryFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-       val name = characterViewModel.characterFullList
+        val name = characterViewModel.characterFullList
     }
 
     override fun onDestroyView() {

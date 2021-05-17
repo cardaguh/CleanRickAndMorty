@@ -15,10 +15,10 @@ import javax.inject.Singleton
 @Component(
     modules = [
         AndroidInjectionModule::class, // De cajon copy paste
-        ViewModelProviderModule::class,// De cajon copy paste
         UtilsModule::class,
         MainModule::class,
-        CharacterModule::class
+        CharacterModule::class,
+        ViewModelProviderModule::class// De cajon copy paste
     ]
 )
 interface AppComponent {
