@@ -1,10 +1,9 @@
-package co.cyclopsapps.cleanrickandmorty.di
+package co.cyclopsapps.cleanrickandmorty.base.di
 
 import android.app.Application
-import co.cyclopsapps.cleanrickandmorty.base.di.App
-import co.cyclopsapps.cleanrickandmorty.base.di.ViewModelProviderModule
+import co.cyclopsapps.cleanrickandmorty.base.App
 import co.cyclopsapps.cleanrickandmorty.utilities.di.UtilsModule
-import co.cyclopsapps.cleanrickandmorty.views.ListModule
+import co.cyclopsapps.cleanrickandmorty.character.di.CharacterModule
 import co.cyclopsapps.cleanrickandmorty.views.di.MainModule
 import dagger.BindsInstance
 import dagger.Component
@@ -16,10 +15,10 @@ import javax.inject.Singleton
 @Component(
     modules = [
         AndroidInjectionModule::class, // De cajon copy paste
+        ViewModelProviderModule::class,// De cajon copy paste
         UtilsModule::class,
         MainModule::class,
-        ViewModelProviderModule::class,
-        ListModule::class
+        CharacterModule::class
     ]
 )
 interface AppComponent {
@@ -31,5 +30,5 @@ interface AppComponent {
     }
 
     fun inject(app: App) // lo unico que cambia es este por
-                       // tu nombre de class que extiende de Application
+    // tu nombre de class que extiende de Application
 }
