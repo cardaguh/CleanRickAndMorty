@@ -1,5 +1,7 @@
 package co.cyclopsapps.cleanrickandmorty
 import co.cyclopsapps.cleanrickandmorty.character.list.model.CharacterResponse
+import co.cyclopsapps.cleanrickandmorty.services.RetrofitClient
+import co.cyclopsapps.cleanrickandmorty.services.WebService
 import retrofit2.Response
 import timber.log.Timber
 

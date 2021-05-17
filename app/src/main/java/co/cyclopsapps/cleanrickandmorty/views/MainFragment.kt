@@ -1,4 +1,4 @@
-package co.cyclopsapps.cleanrickandmorty
+package co.cyclopsapps.cleanrickandmorty.views
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -7,15 +7,19 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.view.isVisible
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
+import co.cyclopsapps.cleanrickandmorty.views.viewmodels.MainViewModel
+import co.cyclopsapps.cleanrickandmorty.utilities.ScreenState
 import co.cyclopsapps.cleanrickandmorty.character.CharacterState
 import co.cyclopsapps.cleanrickandmorty.character.detail.DetailFragment
 import co.cyclopsapps.cleanrickandmorty.character.list.adapater.CharacterAdapter
 import co.cyclopsapps.cleanrickandmorty.databinding.FragmentMainBinding
-import org.w3c.dom.CharacterData
+import co.cyclopsapps.cleanrickandmorty.utilities.ViewModelFactory
+import javax.inject.Inject
 
 
 class MainFragment : Fragment(), OnCustomClickListener {
@@ -27,6 +31,11 @@ class MainFragment : Fragment(), OnCustomClickListener {
     private lateinit var mainViewModel: MainViewModel
 
     private lateinit var characterAdapter: CharacterAdapter
+
+    @Inject
+    lateinit var viewModelFactory: ViewModelProvider.Factory
+
+    private val viewModel: MainViewModel by viewModels { viewModelFactory }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)

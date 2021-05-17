@@ -6,7 +6,7 @@ import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
-import co.cyclopsapps.cleanrickandmorty.OnCustomClickListener
+import co.cyclopsapps.cleanrickandmorty.views.OnCustomClickListener
 import co.cyclopsapps.cleanrickandmorty.R
 import co.cyclopsapps.cleanrickandmorty.character.list.model.CharacterDataModel
 import co.cyclopsapps.cleanrickandmorty.character.list.model.CharacterResponse

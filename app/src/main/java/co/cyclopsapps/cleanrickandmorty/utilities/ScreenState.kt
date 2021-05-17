@@ -1,4 +1,4 @@
-package co.cyclopsapps.cleanrickandmorty
+package co.cyclopsapps.cleanrickandmorty.utilities
 
 sealed class ScreenState<out T> {
     object Loading : ScreenState<Nothing>()

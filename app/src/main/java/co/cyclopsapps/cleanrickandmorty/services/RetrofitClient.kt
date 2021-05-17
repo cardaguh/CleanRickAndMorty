@@ -1,4 +1,4 @@
-package co.cyclopsapps.cleanrickandmorty
+package co.cyclopsapps.cleanrickandmorty.services
 
 import androidx.viewbinding.BuildConfig
 import okhttp3.OkHttpClient

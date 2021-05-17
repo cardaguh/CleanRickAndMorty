@@ -1,4 +1,4 @@
-package co.cyclopsapps.cleanrickandmorty
+package co.cyclopsapps.cleanrickandmorty.services
 
 import co.cyclopsapps.cleanrickandmorty.character.list.model.CharacterResponse
 import retrofit2.Response

@@ -1,17 +1,20 @@
-package co.cyclopsapps.cleanrickandmorty
+package co.cyclopsapps.cleanrickandmorty.views.viewmodels
 
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import co.cyclopsapps.cleanrickandmorty.CharacterRepository
+import co.cyclopsapps.cleanrickandmorty.utilities.ScreenState
 import co.cyclopsapps.cleanrickandmorty.character.CharacterState
 import co.cyclopsapps.cleanrickandmorty.character.list.model.CharacterDataModel
 import kotlinx.coroutines.CoroutineScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 import kotlin.coroutines.CoroutineContext
 
-class MainViewModel: ViewModel(), CoroutineScope {
+class MainViewModel @Inject constructor(): ViewModel(), CoroutineScope {
 
     private val states: MutableLiveData<ScreenState<CharacterState>> = MutableLiveData()
     private val repository = CharacterRepository()
