@@ -147,6 +147,7 @@ class MainFragment : Fragment(), OnCustomClickListener {
             groupieAdapter.add(CharacterRow(character, ::onCategoryClickListener)) // ITEM 1
         }
 
+       // val qualifiedList = list.filter { data-> data.isQualified == true} 10000 / 100 estsn califidos
     }
 
 
