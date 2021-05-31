@@ -4,6 +4,7 @@ buildscript {
     repositories {
         google()
         jcenter()
+        mavenCentral()
     }
     dependencies {
         classpath "com.android.tools.build:gradle:4.1.1"
@@ -14,7 +15,8 @@ buildscript {
     }
 
     ext {
-        dagger_version = "2.32"
+        dagger_version = "2.35.1"
+        groupie_version = "2.9.0"
     }
 }
 
@@ -23,6 +25,7 @@ allprojects {
         google()
         jcenter()
         maven { url "https://jitpack.io" }
+        mavenCentral()
     }
 }
 

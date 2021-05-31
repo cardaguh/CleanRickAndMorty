@@ -16,9 +16,13 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import co.cyclopsapps.cleanrickandmorty.character.CharacterState
 import co.cyclopsapps.cleanrickandmorty.character.detail.DetailFragment
 import co.cyclopsapps.cleanrickandmorty.character.list.adapater.CharacterAdapter
+import co.cyclopsapps.cleanrickandmorty.character.list.item.CharacterRow
+import co.cyclopsapps.cleanrickandmorty.character.list.item.CharacterRow2
+import co.cyclopsapps.cleanrickandmorty.character.list.model.CharacterDataModel
 import co.cyclopsapps.cleanrickandmorty.databinding.FragmentMainBinding
 import co.cyclopsapps.cleanrickandmorty.utilities.ScreenState
 import co.cyclopsapps.cleanrickandmorty.views.viewmodels.MainViewModel
+import com.xwray.groupie.GroupieAdapter
 import dagger.android.support.AndroidSupportInjection
 import javax.inject.Inject
 
@@ -34,6 +38,7 @@ class MainFragment : Fragment(), OnCustomClickListener {
     private val binding get() = _binding!!
 
     private lateinit var characterAdapter: CharacterAdapter
+    private var groupieAdapter = GroupieAdapter()
 
     override fun onAttach(context: Context) {
         AndroidSupportInjection.inject(this)
@@ -67,7 +72,7 @@ class MainFragment : Fragment(), OnCustomClickListener {
         //Recibe interfaz y el otro recibe función
 
         //Primero pasamos interfaz y el segundo paramatro es una función
-        characterAdapter = CharacterAdapter(this, ::onCategoryClickListener)
+        //characterAdapter = CharacterAdapter(this, ::onCategoryClickListener)
 
         with(binding.rvCharacterss) {
             layoutManager = LinearLayoutManager(binding.root.context)
@@ -77,7 +82,8 @@ class MainFragment : Fragment(), OnCustomClickListener {
                     DividerItemDecoration.VERTICAL
                 )
             )
-            adapter = characterAdapter
+            // adapter = characterAdapter
+            adapter = groupieAdapter // Groupie
         }
     }
 
@@ -122,7 +128,8 @@ class MainFragment : Fragment(), OnCustomClickListener {
         this@MainFragment.context?.let {
             when (renderState) {
                 is CharacterState.ShowRestaurantData -> {
-                    characterAdapter.setCharacterData(renderState.response)
+                    //characterAdapter.setCharacterData(renderState.response)
+                    setCharacters(renderState.response.results)
                     binding.progress.isVisible = false
 
                 }
@@ -132,6 +139,14 @@ class MainFragment : Fragment(), OnCustomClickListener {
                 }
             }
         }
+    }
+
+    private fun setCharacters(list: MutableList<CharacterDataModel>?) {
+        list?.forEach { character ->
+            groupieAdapter.add(CharacterRow2(character, ::onCategoryClickListener)) // ITEM 2
+            groupieAdapter.add(CharacterRow(character, ::onCategoryClickListener)) // ITEM 1
+        }
+
     }
 
 
