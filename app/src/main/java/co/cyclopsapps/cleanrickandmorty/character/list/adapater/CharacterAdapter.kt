@@ -31,6 +31,7 @@ class CharacterAdapter(
     }
 
     override fun onBindViewHolder(holder: MyHolder, position: Int) {
+
         val character = allCharacter[position]
         //Permite acceder a los componentes sin tener que estar escribiendo
         // category.name o category.img
@@ -42,6 +43,7 @@ class CharacterAdapter(
             //onCustomClickListener1.showCategoryDetail(category.img)
             onCustomClickListener2(character.name, character.image)
         }
+
 
     }
     override fun getItemCount(): Int {

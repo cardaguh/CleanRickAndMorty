@@ -17,6 +17,7 @@ class CharacterRow2(
             Glide.with(viewBinding.root.context).load(image).into(viewBinding.imgCharacter)
             viewBinding.txtName.text = name
             viewBinding.txtDescription.text = species
+            viewBinding.txtId.text = id.toString()
         }
 
         viewBinding.root.setOnClickListener {

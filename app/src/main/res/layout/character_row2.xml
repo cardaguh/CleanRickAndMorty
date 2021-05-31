@@ -29,6 +29,15 @@
             android:maxLines="2"
             tools:text="Character description" />
 
+        <TextView
+            android:id="@+id/txt_id"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:ellipsize="end"
+            android:textColor="@color/white"
+            android:maxLines="2"
+            tools:text="Character id" />
+
     </LinearLayout>
 
     <ImageView
